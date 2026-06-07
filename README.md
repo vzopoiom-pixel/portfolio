@@ -1,173 +1,65 @@
-# portfolio
-# 🤖 Quiz Funnel Bot — Telegram-бот с воронкой продаж
+# 🤖 Quiz Funnel Telegram Bot
 
-Готовый Telegram-бот с квиз-воронкой, реферальной системой и поддержкой Telegram Mini App.
+An asynchronous Telegram bot designed for lead generation through engaging quiz funnels, featuring built-in Telegram Mini App (Web App) support.
 
----
+## 🚀 Key Features
 
-## 📦 Что входит в комплект
-
-- Пошаговая квиз-воронка с задержками между сообщениями
-- Реферальная система (пользователи приглашают друзей по ссылке)
-- Проверка подписки на Telegram-канал (опционально)
-- Поддержка Telegram Web App / Mini App
-- База данных с хранением прогресса каждого пользователя
-- Планировщик отложенных сообщений
+* **Asynchronous Architecture**: Built with `aiogram 3.x` for high-performance and non-blocking I/O operations.
+* **Database Management**: Integrated with `SQLAlchemy` and `aiosqlite` for asynchronous SQLite database interactions.
+* **Task Scheduling**: Includes an automated background scheduler (`APScheduler`) for delayed messages and push notifications.
+* **Referral System**: Built-in multi-level referral tracking to monitor user invitations.
+* **Web App Support**: Seamless integration with Telegram Mini Apps for enhanced user experience.
 
 ---
 
-## ⚙️ Требования
+## 📁 Project Structure
 
-- Python **3.11+**
-- Windows / Mac / Linux
-- Telegram-аккаунт для создания бота через [@BotFather](https://t.me/BotFather)
-
----
-
-## 🚀 Установка и запуск
-
-### Шаг 1 — Получи токен бота
-
-1. Открой Telegram, найди [@BotFather](https://t.me/BotFather)
-2. Отправь команду `/newbot`
-3. Придумай имя и username для бота
-4. Скопируй токен вида `1234567890:AAExxxxxxxxxxxxxxxx`
-
----
-
-### Шаг 2 — Настрой файл `.env`
-
-В папке проекта создай файл `.env` (без расширения) и вставь:
-
-```
-BOT_TOKEN=сюда_вставь_свой_токен
-DATABASE_URL=sqlite+aiosqlite:///./quiz_funnel.db
-CHANNEL_ID=
-CRM_WEBHOOK_URL=
-```
-
-> `CHANNEL_ID` — оставь пустым если проверка подписки не нужна.  
-> Если нужна — вставь ID канала, например `@mychannel` или `-1001234567890`.
-
----
-
-### Шаг 3 — Установи зависимости
-
-Открой терминал в папке проекта и выполни:
-
-```bash
-python -m pip install -r requirements.txt
+```text
+├── database/         # Database models, connections, and async queries
+├── handlers/         # Event handlers (commands, messages, callbacks)
+├── services/         # Business logic (scheduler, analytical reports)
+├── config.py         # Environment variables and bot configuration
+├── requirements.txt  # Python package dependencies
+└── README.md         # Project documentation
 ```
 
 ---
 
-### Шаг 4 — Запусти бота
+## 🛠️ Installation & Setup
 
-```bash
-python main.py
-```
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com
+   cd portfolio
+   ```
 
-Если всё настроено верно, увидишь:
+2. **Create and activate a virtual environment:**
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
 
-```
-Database initialised
-Scheduler started
-Bot is starting…
-Start polling
-```
+3. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-Бот работает! Напиши ему `/start` в Telegram.
+4. **Configure Environment Variables:**
+   Create a `.env` file in the root directory and add your credentials:
+   ```env
+   BOT_TOKEN=your_telegram_bot_token
+   DATABASE_URL=sqlite+aiosqlite:///./quiz_funnel.db
+   ```
 
----
-
-## ✏️ Настройка воронки
-
-Все шаги квиза находятся в файле `handlers/funnel.py` в словаре `STEP_CONTENT`:
-
-```python
-STEP_CONTENT = {
-    1: {
-        "text": "Твой вопрос или текст для шага 1",
-        "delay": 0,           # отправить сразу
-    },
-    2: {
-        "text": "Шаг 2",
-        "delay": 3600,        # отправить через 1 час
-    },
-    3: {
-        "text": "Шаг 3",
-        "delay": 86400,       # отправить через 24 часа
-    },
-}
-```
-
-**Как изменить:**
-- `"text"` — замени на свой текст сообщения
-- `"delay"` — задержка в секундах перед отправкой следующего шага
-- Добавляй или удаляй шаги по необходимости
+5. **Run the Bot:**
+   ```bash
+   python main.py
+   ```
 
 ---
 
-## 🔗 Реферальная система
+## 🛡️ Security Note
 
-Реферальная ссылка для пользователя генерируется автоматически:
+The `.env` file containing sensitive bot tokens and database credentials is listed in `.gitignore` and is **never** pushed to the public repository.
 
-```
-https://t.me/ИМЯ_БОТА?start=ref_TELEGRAM_ID
-```
-
-Когда новый пользователь переходит по такой ссылке — бот записывает кто кого пригласил в базу данных.
-
----
-
-## 📁 Структура проекта
-
-```
-quiz_funnel_bot/
-├── database/
-│   ├── connection.py     # Подключение к БД
-│   └── models.py         # Таблицы: пользователи, шаги, рефералы
-├── handlers/
-│   ├── start.py          # Команда /start
-│   ├── funnel.py         # Шаги воронки ← редактируй здесь
-│   └── webapp.py         # Telegram Mini App
-├── middlewares/
-│   └── check_sub.py      # Проверка подписки на канал
-├── services/
-│   └── scheduler.py      # Отложенные сообщения
-├── config.py             # Конфигурация
-├── main.py               # Точка запуска
-├── requirements.txt      # Зависимости
-└── .env                  # Твои секретные ключи (создать вручную)
-```
-
----
-
-## ❓ Частые вопросы
-
-**Бот не запускается — ошибка `BOT_TOKEN`**  
-→ Проверь что файл называется `.env` (не `.env.example`, не `.env.txt`)
-
-**`pip` не найден**  
-→ Используй `python -m pip install -r requirements.txt`
-
-**Как остановить бота?**  
-→ В терминале нажми `Ctrl + C`
-
-**Как запустить бота постоянно (на сервере)?**  
-→ Используй `screen`, `pm2` или оформи как systemd-сервис на Linux VPS
-
----
-
-## 🛡️ Безопасность
-
-- Никогда не публикуй файл `.env` в открытый доступ
-- Не отправляй токен бота никому
-- Если токен засветился — сразу отзови его в @BotFather (`/mybots` → выбери бота → **Revoke current token**)
-
----
-
-## 📞 Поддержка
-
-По вопросам настройки обращайся к продавцу.
 
