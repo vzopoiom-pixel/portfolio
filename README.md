@@ -1,25 +1,34 @@
-# 📦 VaporCore — Internal Inventory & Recipe Database
+# 🤖 Quiz Funnel Telegram Bot
 
-A high-performance internal inventory management and search engine designed for rapid product cataloging, multi-flavor filtration, and raw ingredient stock tracking with built-in tablet/iPad optimization.
+An asynchronous Telegram bot designed for lead generation through engaging quiz funnels, featuring built-in Telegram Mini App (Web App) support.
 
 ## 🚀 Key Features
 
-- **Multi-Parametric Filter Engine**: Instant multi-tag flavor search, bottle size, nicotine strength (MG), and iced profile selectors.
-- **Dual Database Architecture**: Seamlessly manage both finished retail product SKUs and concentrated raw aroma/ingredient stock.
-- **iPad & POS Optimized**: Ergonomic 44px+ touch targets and fast one-tap stock adjustments (`+` / `-`).
-- **Low Stock & Threshold Alerts**: Automated inventory status calculation with visual warning tags and stock counters.
-- **Local Persistence & Export**: Offline-ready architecture utilizing client-side storage with one-click JSON backup export.
+- **Asynchronous Architecture**: Built with `aiogram 3.x` for high-performance and non-blocking I/O operations.
+- **Database Management**: Integrated with `SQLAlchemy` and `aiosqlite` for asynchronous SQLite database interactions.
+- **Task Scheduling**: Includes an automated background scheduler (`APScheduler`) for delayed messages and push notifications.
+- **Referral System**: Built-in multi-level referral tracking to monitor user invitations.
+- **Web App Support**: Seamless integration with Telegram Mini Apps for enhanced user experience.
 
 ## 📁 Project Structure
 
 ```text
-├── src/
-│   ├── components/         # Modular UI components (modals, filters, cards, summary)
-│   ├── data/               # Mock datasets and inventory seeding configuration
-│   ├── types.ts            # TypeScript interfaces, types, and data models
-│   ├── App.tsx             # Main dashboard layout and search/filter state engine
-│   ├── main.tsx            # Application entry point
-│   └── index.css           # Tailwind CSS directives and custom styling
-├── index.html              # HTML shell with responsive meta and preloader
-├── package.json            # Project dependencies and build scripts
-└── vite.config.ts          # Vite build and development configuration
+├── database/         # Database models, connections, and async queries
+├── handlers/         # Event handlers (commands, messages, callbacks)
+├── services/         # Business logic (scheduler, analytical reports)
+├── config.py         # Environment variables and bot configuration
+├── requirements.txt  # Python package dependencies
+└── README.md         # Project documentation
+
+
+=============================================================================
+git clone https://github.com/YOUR_USERNAME/quiz-funnel-telegram-bot.git
+cd quiz-funnel-telegram-bot
+=============================================================================
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+=============================================================================
+pip install -r requirements.txt
+=============================================================================
+python main.py
+=============================================================================
