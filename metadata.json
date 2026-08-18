@@ -1,0 +1,6 @@
+{
+  "name": "Internal Product & Ingredient Database",
+  "description": "Multi-filter inventory search engine for products and ingredients with iPad touch optimization",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
